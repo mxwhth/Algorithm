@@ -6,51 +6,73 @@
  */
 public class MergeSort {
     public static int[] sort(int[] arr) {
-        int[] newArr = null;
         if (arr != null && arr.length > 0) {
-            newArr = new int[arr.length];
-            int mid = arr.length / 2;
-            spilt(arr, newArr, 0, mid);
-            spilt(arr, newArr, mid + 1, arr.length - 1);
-            merge(arr, newArr, 0, mid, arr.length - 1);
+            spilt(arr, 0, arr.length - 1);
         }
-        return newArr;
+        return arr;
     }
 
-    public static void spilt(int[] arr, int[] newArr, int left, int right) {
+    public static void spilt(int[] arr, int left, int right) {
         if (left < right) {
             int mid = (right - left + 1) / 2 + left;
             if (mid == right) {
+                int temp;
+                if (arr[left]>arr[right]) {
+                    temp = arr[left];
+                    arr[left] = arr[right];
+                    arr[right] = temp;
+                }
                 return;
             }
-            spilt(arr, newArr, left, mid);
-            spilt(arr, newArr, mid + 1, right);
-            merge(arr, newArr, left, mid, right);
+            spilt(arr, left, mid);
+            spilt(arr, mid + 1, right);
+            merge(arr, left, mid, right);
         }
 
     }
 
-    public static void merge(int[] arr, int[] newArr, int left, int mid, int right) {
-        int indexL = left;
-        int indexR = mid + 1;
-        while (left < mid && mid < right) {
-            if (arr[left] < arr[mid]) {
-                newArr[indexL] = arr[left];
-                left++;
-                indexL++;
+    public static void merge(int[] arr, int left, int mid, int right) {
+        int l = mid - left + 1;
+        int r = right - mid;
+        int[] L = new int[l];
+        int[] R = new int[r];
+        int temp = left;
+        int i = 0;
+        int j = 0;
+
+        for (int k = 0; k < l; k++) {
+            L[k] = arr[left + k];
+        }
+        for (int k = 0; k < r; k++) {
+            R[k] = arr[mid + 1 + k];
+        }
+
+        while (i < l && j < r) {
+            if (L[i] < R[j]) {
+                arr[temp] = L[i];
+                temp++;
+                i++;
             } else {
-                newArr[indexL] = arr[mid];
-                mid++;
-                indexL++;
+                arr[temp] = R[j];
+                temp++;
+                j++;
             }
 
         }
-        if (arr[left] < arr[mid]) {
-            newArr[indexL] = arr[left];
-            newArr[++indexL] = arr[mid];
-        } else {
-            newArr[indexL] = arr[mid];
-            newArr[++indexL] = arr[left];
+
+
+        while (i < l) {
+            arr[temp] = L[i];
+            temp++;
+            i++;
+        }
+
+
+        while (j < r) {
+            arr[temp] = R[j];
+            temp++;
+            j++;
+
         }
 
     }

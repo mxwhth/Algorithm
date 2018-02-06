@@ -3,8 +3,8 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        int[] arr = {4,3,6,5,9,0,8,1,7,2};
-//        int[] arr = getRandomArray(1000);
+//        int[] arr = {4,3,6,5,9,0,8,1,7,2};
+        int[] arr = getRandomArray(1000);
 
         long start = System.currentTimeMillis();
 
